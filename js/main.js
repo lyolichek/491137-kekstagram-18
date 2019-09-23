@@ -48,11 +48,12 @@ function createDataObject(i) {
 // формируем массив комментариев
 function generateComments(array) {
   var number = randomInteger(0, 5);
-  for(var i = 0; i <= array.length; i++){
-    if (i === number) {
-      return array[i];
-    }
+  var newArray = [];
+  for(var i = 0; i <= number; i++){
+    newArray.push(array[i]);
   }
+
+  return newArray;
 }
 
 // формируем фрагменты
