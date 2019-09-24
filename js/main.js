@@ -14,7 +14,7 @@ var commentsParams = {
   NAMES: ['Лёля', 'Слава', 'Аня', 'Ваня', 'Елена', 'Вова']
 };
 
-var pictures = document.querySelector('.pictures');  // Контейнер для изображений от других пользователей
+var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
 
@@ -58,7 +58,8 @@ function generateComments(array) {
 
 // формируем фрагменты
 function createFragment(obj) {
-  var cloneElement = template.cloneNode(true);  // клон элемента – со всеми атрибутами и дочерними элементами
+  // клон элемента – со всеми атрибутами и дочерними элементами
+  var cloneElement = template.cloneNode(true);
   var image = cloneElement.querySelector('.picture__img');
   var imageComments = cloneElement.querySelector('.picture__comments');
   var imageLikes = cloneElement.querySelector('.picture__likes');
