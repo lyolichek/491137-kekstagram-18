@@ -14,8 +14,8 @@ var commentsParams = {
   NAMES: ['Лёля', 'Слава', 'Аня', 'Ваня', 'Елена', 'Вова']
 };
 
-var pictures = document.querySelector('.pictures');  //Контейнер для изображений от других пользователей
-var template = document.querySelector('#picture').content.querySelector('.picture');  // template
+var pictures = document.querySelector('.pictures');  // Контейнер для изображений от других пользователей
+var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
 
 var teplateArray = createDataArray();
@@ -23,7 +23,7 @@ var teplateArray = createDataArray();
 // формирует массив объектов
 function createDataArray() {
   var arrayObj = [];
-  for(var i = 0; i < QUANTITY; i++) {
+  for (var i = 0; i < QUANTITY; i++) {
     arrayObj.push(createDataObject(i + 1));
   }
 
@@ -49,7 +49,7 @@ function createDataObject(i) {
 function generateComments(array) {
   var number = randomInteger(0, 5);
   var newArray = [];
-  for(var i = 0; i <= number; i++){
+  for (var i = 0; i <= number; i++){
     newArray.push(array[i]);
   }
 
@@ -72,7 +72,7 @@ function createFragment(obj) {
 
 // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
 function createElements(arrayElements) {
-  for(var i = 0; i < arrayElements.length; i++) {
+  for (var i = 0; i < arrayElements.length; i++) {
     fragment.appendChild(createFragment(arrayElements[i]));
   }
 }
