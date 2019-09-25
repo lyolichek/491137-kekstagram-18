@@ -15,8 +15,9 @@ var names = ['Лёля', 'Слава', 'Аня', 'Ваня', 'Елена', 'Во
 var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
-var bigPictureOverlay = document.querySelector('.big-picture');
-
+var bigPicture = document.querySelector('.big-picture');
+var bigPictureComments = document.querySelector('.social__comments');
+var bigPictureComment = document.querySelector('.social__comment');
 
 var teplateArray = createDataArray();
 
@@ -41,7 +42,8 @@ function createDataObject(i) {
   return {
     src: 'photos/' + i + '.jpg',
     likes: randomInteger(5, 200),
-    comments: generateComments(comments)
+    comments: generateComments(comments),
+    description: 'test'
   };
 }
 
@@ -64,7 +66,7 @@ function createFragment(obj) {
   var imageComments = cloneElement.querySelector('.picture__comments');
   var imageLikes = cloneElement.querySelector('.picture__likes');
 
-  image.setAttribute('src', obj.src);
+  image.src = obj.src;
   imageComments.textContent = obj.comments;
   imageLikes.textContent = obj.likes;
 
@@ -76,7 +78,7 @@ function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
 
     if(i === 0) {
-      openBigPictureOverlay(arrayElements[i]);
+      openBigPictureOverlay(arrayElements[i]);  //  вызов 1 большой картинки
     }
 
     fragment.appendChild(createFragment(arrayElements[i]));
@@ -85,44 +87,46 @@ function createElements(arrayElements) {
 
 // создание полноэкранного показа изображения
 function openBigPictureOverlay(obj) {
-  var bigPicture = bigPictureOverlay.querySelector('.big-picture__img img');
-  var bigPictureLikes = bigPictureOverlay.querySelector('.likes-count');
-  var bigPictureCommentsCount = bigPictureOverlay.querySelector('.comments-count');
-  var bigPictureComments = bigPictureOverlay.querySelector('.social__comments'); // ul
+  var fragment = document.createDocumentFragment(); // ведро для контента
 
-  bigPicture.setAttribute('src', obj.src);
-  bigPictureLikes.textContent = obj.likes;
-  bigPictureCommentsCount.textContent = obj.comments.length;
-  bigPictureComments.innerHTML = createSocialCommentsBlock(obj.comments); // 2 comments
-}
+  bigPicture.querySelector('.big-picture__img img').src = obj.src;
+  bigPicture.querySelector('.likes-count').textContent = obj.likes;
+  bigPicture.querySelector('.comments-count').textContent = obj.comments.length;  // 2 comments
+  bigPicture.querySelector('.social__caption').textContent = obj.description;
 
-// создание блока с аватаром и комментами
-function createSocialCommentsBlock(array) {
-  var newArray = [];
-  for(var i = 0; i < array.length; i++) {
-    var item = createObjectCommentBlock(array[i], i, names); //вызываем ф-ю создания li с контентом
-    newArray.push(item);
-    console.log(newArray)
+  deleteDefaultComments(bigPictureComments);
+
+  for (var i = 0; i < obj.comments.length; i++) {
+    var comments = obj.comments[i];
+    fragment.appendChild(createCommentItem(comments, names));
+    //console.log(obj.comments[i]);
+    console.log(fragment);
   }
 
-  return newArray; // вернет обект с 2 значениями
+  bigPicture.classList.remove('hidden');
+  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
 }
 
-// формируем объект блока комментов
-function createObjectCommentBlock(text, i, arr) {
-  var commentItem = document.querySelector('.social__comment');
-  var cloneElement = commentItem.cloneNode(true);
-  var socialPicture = cloneElement.querySelector('.social__picture');
-  var socialText = cloneElement.querySelector('.social__text');
+// Создает li пользователей написавших комментарий
+function createCommentItem(comments, arrNames) {
+  var commentItem = bigPictureComment.cloneNode(true);
 
-  socialPicture.setAttribute('src', 'img/avatar-' + randomInteger(i + 1, 6) + '.svg');
-  socialPicture.setAttribute('alt', arr[i]);
-  socialText.textContent = text;
+  commentItem.querySelector('.social__picture').src = 'img/avatar-' + randomInteger(1, 6) + '.svg';
+  commentItem.querySelector('.social__picture').alt = arrNames[randomInteger(0, 5)];
+  commentItem.querySelector('.social__text').textContent = comments;
 
-  console.log(commentItem)
+  //console.log(1);
+  //console.log(commentItem);
   return commentItem;
+}
+
+// Удаляет дефолтные комментарии
+function deleteDefaultComments(listOfComments) {
+  listOfComments.removeChild(listOfComments.firstChild);
+  console.log(2)
+  console.log(listOfComments)
 }
 
 createElements(teplateArray);
 pictures.appendChild(fragment);
-bigPictureOverlay.classList.remove('hidden');
