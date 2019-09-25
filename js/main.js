@@ -2,7 +2,7 @@
 
 var QUANTITY = 25;
 
-var comments =  [
+var comments = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -16,7 +16,7 @@ var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
 var bigPicture = document.querySelector('.big-picture');
-var bigPictureComments = document.querySelector('.social__comments');
+var bigPictureComments = document.querySelector('.social__comments');  // юл
 var bigPictureComment = document.querySelector('.social__comment');
 
 var teplateArray = createDataArray();
@@ -77,8 +77,8 @@ function createFragment(obj) {
 function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
 
-    if(i === 0) {
-      openBigPictureOverlay(arrayElements[i]);  //  вызов 1 большой картинки
+    if (i === 0) {
+      openBigPictureOverlay(arrayElements[i]);  // вызов 1 большой картинки
     }
 
     fragment.appendChild(createFragment(arrayElements[i]));
@@ -87,21 +87,18 @@ function createElements(arrayElements) {
 
 // создание полноэкранного показа изображения
 function openBigPictureOverlay(obj) {
-  var fragment = document.createDocumentFragment(); // ведро для контента
-
   bigPicture.querySelector('.big-picture__img img').src = obj.src;
   bigPicture.querySelector('.likes-count').textContent = obj.likes;
   bigPicture.querySelector('.comments-count').textContent = obj.comments.length;  // 2 comments
   bigPicture.querySelector('.social__caption').textContent = obj.description;
 
-  deleteDefaultComments(bigPictureComments);
-
   for (var i = 0; i < obj.comments.length; i++) {
     var comments = obj.comments[i];
     fragment.appendChild(createCommentItem(comments, names));
-    //console.log(obj.comments[i]);
-    console.log(fragment);
   }
+
+  deleteDefaultComments(bigPictureComments);
+  bigPictureComments.appendChild(fragment);
 
   bigPicture.classList.remove('hidden');
   bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
@@ -116,16 +113,12 @@ function createCommentItem(comments, arrNames) {
   commentItem.querySelector('.social__picture').alt = arrNames[randomInteger(0, 5)];
   commentItem.querySelector('.social__text').textContent = comments;
 
-  //console.log(1);
-  //console.log(commentItem);
   return commentItem;
 }
 
 // Удаляет дефолтные комментарии
 function deleteDefaultComments(listOfComments) {
-  listOfComments.removeChild(listOfComments.firstChild);
-  console.log(2)
-  console.log(listOfComments)
+  listOfComments.innerHTML = '';
 }
 
 createElements(teplateArray);
