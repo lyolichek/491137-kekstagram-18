@@ -42,14 +42,14 @@ function createDataObject(i) {
     src: 'photos/' + i + '.jpg',
     likes: randomInteger(5, 200),
     comments: generateComments(commentsParams.COMMENTS)
-  }
+  };
 }
 
 // формируем массив комментариев
 function generateComments(array) {
   var number = randomInteger(0, 5);
   var newArray = [];
-  for (var i = 0; i <= number; i++){
+  for (var i = 0; i <= number; i++) {
     newArray.push(array[i]);
   }
 
