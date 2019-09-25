@@ -126,7 +126,3 @@ function createObjectCommentBlock(text, i, arr) {
 createElements(teplateArray);
 pictures.appendChild(fragment);
 bigPictureOverlay.classList.remove('hidden');
-
-
-
-
