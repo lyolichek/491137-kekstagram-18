@@ -16,7 +16,7 @@ var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
 var bigPicture = document.querySelector('.big-picture');
-var bigPictureComments = document.querySelector('.social__comments');  // юл
+var bigPictureComments = document.querySelector('.social__comments');
 var bigPictureComment = document.querySelector('.social__comment');
 
 var teplateArray = createDataArray();
@@ -78,7 +78,7 @@ function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
 
     if (i === 0) {
-      openBigPictureOverlay(arrayElements[i]);  // вызов 1 большой картинки
+      openBigPictureOverlay(arrayElements[i]);
     }
 
     fragment.appendChild(createFragment(arrayElements[i]));
@@ -89,12 +89,11 @@ function createElements(arrayElements) {
 function openBigPictureOverlay(obj) {
   bigPicture.querySelector('.big-picture__img img').src = obj.src;
   bigPicture.querySelector('.likes-count').textContent = obj.likes;
-  bigPicture.querySelector('.comments-count').textContent = obj.comments.length;  // 2 comments
+  bigPicture.querySelector('.comments-count').textContent = obj.comments.length;
   bigPicture.querySelector('.social__caption').textContent = obj.description;
 
   for (var i = 0; i < obj.comments.length; i++) {
-    var comments = obj.comments[i];
-    fragment.appendChild(createCommentItem(comments, names));
+    fragment.appendChild(createCommentItem(obj.comments[i], names));
   }
 
   deleteDefaultComments(bigPictureComments);
