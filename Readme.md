@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Лёля](https://up.htmlacademy.ru/javascript/18/user/491137).
-* Наставник: `Неизвестно`.
+* Наставник: `Денис Корнейчук`.
 
 ---
 
