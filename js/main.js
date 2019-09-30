@@ -131,11 +131,10 @@ function deleteDefaultComments(listOfComments) {
 createElements(teplateArray);
 pictures.appendChild(fragment);
 
-bigPictureCancel.addEventListener('click', function(evt) {
+bigPictureCancel.addEventListener ('click', function(evt) {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
-})
-
+});
 
 
 // Загрузка нового изображения
@@ -164,12 +163,12 @@ scaleControlValue.setAttribute('value', '100%');
 
 var currentValue = parseInt(scaleControlValue.getAttribute('value'), 10);
 
-buttonSmall.addEventListener('click', function(evt) {
+buttonSmall.addEventListener('click', function (evt) {
   evt.preventDefault();
   changeValue(currentValue, false);
 });
 
-buttonlBig.addEventListener('click', function(evt) {
+buttonlBig.addEventListener('click', function (evt) {
   evt.preventDefault();
   changeValue(currentValue, true);
 });
@@ -198,13 +197,13 @@ for (var i = 0; i < effectsItems.length; i++) {
 }
 
 function addThumbnailClickHandler(thumbnail) {
-  thumbnail.addEventListener('click', function() {
+  thumbnail.addEventListener('click', function () {
     var item = thumbnail.querySelector('.effects__label');
     var filterName = item.getAttribute('for');
     var picture = imageUploadPreview.querySelector('img');
     picture.removeAttribute('class');
 
-    if(FILTERS[filterName]) {
+    if (FILTERS[filterName]) {
       picture.classList.add(FILTERS[filterName]);
     }
   })
@@ -229,7 +228,7 @@ var HASHTAG_ERRORS = {
 
 var inputHashtags = document.querySelector('.text__hashtags');
 
-inputHashtags.addEventListener('change', function() {
+inputHashtags.addEventListener('change', function () {
   var hashtagsArr = inputHashtags.value.split(' ');
   var errorCode = checkHashtag(hashtagsArr);
 
@@ -268,7 +267,7 @@ function checkHashtag(array) {
 // Добавление комментария к изображению
 var inputComments = document.querySelector('.text__description');
 
-inputComments.addEventListener('change', function() {
+inputComments.addEventListener('change', function () {
   var str = inputComments.value;
   if (str.length > 140) {
     inputComments.setCustomValidity('Комментарий не должен превышать 140-ка символов');
