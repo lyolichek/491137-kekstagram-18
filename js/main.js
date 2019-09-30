@@ -131,7 +131,7 @@ function deleteDefaultComments(listOfComments) {
 createElements(teplateArray);
 pictures.appendChild(fragment);
 
-bigPictureCancel.addEventListener ('click', function(evt) {
+bigPictureCancel.addEventListener('click', function (evt) {
   evt.preventDefault();
   bigPicture.classList.add('hidden');
 });
@@ -142,11 +142,11 @@ var uploadFile = document.querySelector('#upload-file');
 var uploadOverlay = document.querySelector('.img-upload__overlay');
 var uploadOverlayCancel = uploadOverlay.querySelector('.img-upload__cancel');
 
-uploadFile.addEventListener('change', function() {
+uploadFile.addEventListener('change', function () {
   uploadOverlay.classList.remove('hidden');
 });
 
-uploadOverlayCancel.addEventListener('click', function(evt) {
+uploadOverlayCancel.addEventListener('click', function (evt) {
   evt.preventDefault();
   uploadOverlay.classList.add('hidden');
 });
@@ -206,15 +206,15 @@ function addThumbnailClickHandler(thumbnail) {
     if (FILTERS[filterName]) {
       picture.classList.add(FILTERS[filterName]);
     }
-  })
+  });
 }
 
-//Интенсивность эффекта регулируется перемещением ползунка в слайдере
-var uploadEffectLevelPin = document.querySelector('.effect-level__pin');  // ползунок
+// Интенсивность эффекта регулируется перемещением ползунка в слайдере
+// var uploadEffectLevelPin = document.querySelector('.effect-level__pin');  // ползунок
 
-//uploadEffectLevelPin.addEventListener('mouseup', function () {
+// uploadEffectLevelPin.addEventListener('mouseup', function () {
 //  alert('hello');
-//});
+// });
 
 
 // Добавление хэш-тегов и комментария к изображению
