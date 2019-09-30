@@ -2,7 +2,6 @@
 
 var QUANTITY = 25;
 var FILTERS = {
-  'effect-none': '',
   'effect-chrome': 'effects__preview--chrome',
   'effect-sepia': 'effects__preview--sepia',
   'effect-marvin': 'effects__preview--marvin',
@@ -204,7 +203,10 @@ function addThumbnailClickHandler(thumbnail) {
     var filterName = item.getAttribute('for');
     var picture = imageUploadPreview.querySelector('img');
     picture.removeAttribute('class');
-    picture.classList.add(FILTERS[filterName]);
+
+    if(FILTERS[filterName]) {
+      picture.classList.add(FILTERS[filterName]);
+    }
   })
 }
 
@@ -214,3 +216,64 @@ var uploadEffectLevelPin = document.querySelector('.effect-level__pin');  // п�
 //uploadEffectLevelPin.addEventListener('mouseup', function () {
 //  alert('hello');
 //});
+
+
+// Добавление хэш-тегов и комментария к изображению
+var HASHTAG_ERRORS = {
+  'symbol': 'Отсутствует обязательный символ #',
+  'symbol_wrong': 'Символ # должен стоять в начале хештега',
+  'max': 'Максимальное кол-во хештегов должно быть 5',
+  'same': 'Есть повторяющиеся хештеги',
+  'maxLength': 'Слишком длинный хештег'
+};
+
+var inputHashtags = document.querySelector('.text__hashtags');
+
+inputHashtags.addEventListener('change', function() {
+  var hashtagsArr = inputHashtags.value.split(' ');
+  var errorCode = checkHashtag(hashtagsArr);
+
+  if (errorCode !== '') {
+    inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
+  } else {
+    inputHashtags.setCustomValidity(errorCode);
+  }
+});
+
+function checkHashtag(array) {
+  if (array.length > 5) {
+    return 'max';
+  }
+
+  for (var i = 0; i < array.length; i++) {
+    if (array[i].length > 20) {
+      return 'maxLength';
+    }
+    if (array[i].indexOf('#') < 0) {
+      return 'symbol';
+    }
+    if (array[i].indexOf('#') > 0) {
+      return 'symbol_wrong';
+    }
+    for (var j = 0; j < array.length; j++) {
+      if ((array[i].toLowerCase() === array[j].toLowerCase()) && (i !== j)) {
+        return 'same';
+      }
+    }
+  }
+
+  return '';
+}
+
+// Добавление комментария к изображению
+var inputComments = document.querySelector('.text__description');
+
+inputComments.addEventListener('change', function() {
+  var str = inputComments.value;
+  if (str.length > 140) {
+    inputComments.setCustomValidity('Комментарий не должен превышать 140-ка символов');
+  } else {
+    inputComments.setCustomValidity('');
+  }
+});
+
