@@ -113,12 +113,12 @@ function openBigPictureOverlay(obj) {
 }
 
 // Создает li пользователей написавших комментарий
-function createCommentItem(comments, arrNames) {
+function createCommentItem(comment, arrNames) {
   var commentItem = bigPictureComment.cloneNode(true);
 
   commentItem.querySelector('.social__picture').src = 'img/avatar-' + randomInteger(1, 6) + '.svg';
   commentItem.querySelector('.social__picture').alt = arrNames[randomInteger(0, 5)];
-  commentItem.querySelector('.social__text').textContent = comments;
+  commentItem.querySelector('.social__text').textContent = comment;
 
   return commentItem;
 }
@@ -244,18 +244,18 @@ function checkHashtag(array) {
     return 'max';
   }
 
-  for (var i = 0; i < array.length; i++) {
-    if (array[i].length > 20) {
+  for (var k = 0; k < array.length; k++) {
+    if (array[k].length > 20) {
       return 'maxLength';
     }
-    if (array[i].indexOf('#') < 0) {
+    if (array[k].indexOf('#') < 0) {
       return 'symbol';
     }
-    if (array[i].indexOf('#') > 0) {
+    if (array[k].indexOf('#') > 0) {
       return 'symbol_wrong';
     }
     for (var j = 0; j < array.length; j++) {
-      if ((array[i].toLowerCase() === array[j].toLowerCase()) && (i !== j)) {
+      if ((array[k].toLowerCase() === array[j].toLowerCase()) && (k !== j)) {
         return 'same';
       }
     }
