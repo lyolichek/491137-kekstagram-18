@@ -133,9 +133,8 @@ pictures.appendChild(fragment);
 
 bigPictureCancel.addEventListener('click', function (evt) {
   evt.preventDefault();
-  bigPicture.classList.add('hidden');
+  closePopup(bigPicture);
 });
-
 
 // Загрузка нового изображения
 var uploadFile = document.querySelector('#upload-file');
@@ -143,12 +142,12 @@ var uploadOverlay = document.querySelector('.img-upload__overlay');
 var uploadOverlayCancel = uploadOverlay.querySelector('.img-upload__cancel');
 
 uploadFile.addEventListener('change', function () {
-  uploadOverlay.classList.remove('hidden');
+  openPopup(uploadOverlay);
 });
 
 uploadOverlayCancel.addEventListener('click', function (evt) {
   evt.preventDefault();
-  uploadOverlay.classList.add('hidden');
+  closePopup(uploadOverlay);
 });
 
 // Увеличение масштаба изображения
@@ -276,3 +275,56 @@ inputComments.addEventListener('change', function () {
   }
 });
 
+// Открываем и закрываем попап с изображением
+function openPopup(element) {
+  element.classList.remove('hidden');
+}
+
+function closePopup(element) {
+  element.classList.add('hidden');
+}
+
+
+// ------------------------------------------------------
+
+var galleryItems = document.querySelectorAll('a.picture');
+
+function addEventToGalleryItem(itemsArray) {
+  for (var i = 0; i < itemsArray.length; i++) {
+    itemsArray[i].addEventListener('click', fillImgPopup);
+  }
+}
+
+addEventToGalleryItem(galleryItems);
+
+function fillImgPopup(evt) {
+  for (var i = 0; i < evt.path.length; i++) {
+    if (evt.path[i].classList && evt.path[i].classList.contains('picture')) {
+      var clickedObj = {};
+      var clickedElement = evt.path[i];
+      clickedObj.url = clickedElement.querySelector('img').getAttribute('src');
+      clickedObj.likes = clickedElement.querySelector('.picture__likes').textContent;
+      clickedObj.comments = clickedElement.querySelector('.picture__comments').textContent;
+      openGalleryPhoto(clickedObj);
+      openPopup(bigPicture);
+    }
+  }
+}
+
+function openGalleryPhoto(obj) {
+  var bigPictureImages = bigPicture.querySelector('.big-picture__img img');
+  var likesCount = bigPicture.querySelector('.likes-count');
+  var socialComments = bigPicture.querySelectorAll('.social__comment');
+  bigPictureImages.setAttribute('src', obj.url);
+  likesCount.textContent = obj.likes;
+  socialComments.textContent = obj.comments;
+  console.log(bigPictureImages);
+}
+
+// не работает ;( !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+bigPictureCancel.addEventListener('keydown', function (evt) {
+  if (evt.code === 27) {
+    closePopup(bigPicture);
+    console.log(evt);
+  }
+});
