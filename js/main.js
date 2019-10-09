@@ -75,7 +75,7 @@ function createFragment(obj) {
   var imageLikes = cloneElement.querySelector('.picture__likes');
 
   image.src = obj.src;
-  imageComments.textContent = obj.comments; //.length;
+  imageComments.textContent = obj.comments;
   imageLikes.textContent = obj.likes;
 
   return cloneElement;
@@ -84,11 +84,6 @@ function createFragment(obj) {
 // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
 function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
-
-    if (i === 0) {
-      openBigPictureOverlay(arrayElements[i]);
-    }
-
     fragment.appendChild(createFragment(arrayElements[i]));
   }
 }
@@ -296,22 +291,21 @@ function closePopup(element) {
 var galleryItems = document.querySelectorAll('a.picture');
 
 function addEventToGalleryItem(itemsArray) {
-  for (var i = 0; i < itemsArray.length; i++) {
-    itemsArray[i].addEventListener('click', fillImgPopup);
+  for (var l = 0; l < itemsArray.length; l++) {
+    itemsArray[l].addEventListener('click', fillImgPopup);
   }
 }
 
 addEventToGalleryItem(galleryItems);
 
 function fillImgPopup(evt) {
-  for (var i = 0; i < evt.path.length; i++) {
-    if (evt.path[i].classList && evt.path[i].classList.contains('picture')) {
+  for (var m = 0; m < evt.path.length; m++) {
+    if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
       var clickedObj = {};
-      var clickedElement = evt.path[i];
+      var clickedElement = evt.path[m];
       clickedObj.url = clickedElement.querySelector('img').getAttribute('src');
       clickedObj.likes = clickedElement.querySelector('.picture__likes').textContent;
       clickedObj.comments = clickedElement.querySelector('.picture__comments').textContent;
-      console.log(evt.path[i]);
       openGalleryPhoto(clickedObj);
       openPopup(bigPicture);
     }
@@ -325,7 +319,6 @@ function openGalleryPhoto(obj) {
   bigPictureImages.setAttribute('src', obj.url);
   likesCount.textContent = obj.likes;
   socialComments.textContent = obj.comments;
-  //console.log(socialComments);
 }
 
 
