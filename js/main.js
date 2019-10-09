@@ -27,7 +27,7 @@ var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 var bigPictureComments = document.querySelector('.social__comments');
 var bigPictureComment = document.querySelector('.social__comment');
 
-var teplateArray = createDataArray();
+var templateArray = createDataArray();
 
 // формирует массив объектов
 function createDataArray() {
@@ -75,7 +75,7 @@ function createFragment(obj) {
   var imageLikes = cloneElement.querySelector('.picture__likes');
 
   image.src = obj.src;
-  imageComments.textContent = obj.comments;
+  imageComments.textContent = obj.comments; //.length;
   imageLikes.textContent = obj.likes;
 
   return cloneElement;
@@ -128,7 +128,7 @@ function deleteDefaultComments(listOfComments) {
   listOfComments.innerHTML = '';
 }
 
-createElements(teplateArray);
+createElements(templateArray);
 pictures.appendChild(fragment);
 
 bigPictureCancel.addEventListener('click', function (evt) {
@@ -278,6 +278,12 @@ inputComments.addEventListener('change', function () {
 // Открываем и закрываем попап с изображением
 function openPopup(element) {
   element.classList.remove('hidden');
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 27) {
+      closePopup(element);
+    }
+  });
 }
 
 function closePopup(element) {
@@ -305,6 +311,7 @@ function fillImgPopup(evt) {
       clickedObj.url = clickedElement.querySelector('img').getAttribute('src');
       clickedObj.likes = clickedElement.querySelector('.picture__likes').textContent;
       clickedObj.comments = clickedElement.querySelector('.picture__comments').textContent;
+      console.log(evt.path[i]);
       openGalleryPhoto(clickedObj);
       openPopup(bigPicture);
     }
@@ -314,17 +321,11 @@ function fillImgPopup(evt) {
 function openGalleryPhoto(obj) {
   var bigPictureImages = bigPicture.querySelector('.big-picture__img img');
   var likesCount = bigPicture.querySelector('.likes-count');
-  var socialComments = bigPicture.querySelectorAll('.social__comment');
+  var socialComments = bigPicture.querySelector('.social__comment');
   bigPictureImages.setAttribute('src', obj.url);
   likesCount.textContent = obj.likes;
   socialComments.textContent = obj.comments;
-  console.log(bigPictureImages);
+  //console.log(socialComments);
 }
 
-// не работает ;( !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-bigPictureCancel.addEventListener('keydown', function (evt) {
-  if (evt.code === 27) {
-    closePopup(bigPicture);
-    console.log(evt);
-  }
-});
+
