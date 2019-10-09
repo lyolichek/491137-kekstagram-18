@@ -9,7 +9,7 @@ var FILTERS = {
   'effect-heat': 'effects__preview--heat'
 };
 
-var comments = [
+var COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -50,7 +50,7 @@ function createDataObject(i) {
   return {
     src: 'photos/' + i + '.jpg',
     likes: randomInteger(5, 200),
-    comments: generateComments(comments),
+    comments: generateComments(COMMENTS),
     description: 'test'
   };
 }
@@ -62,12 +62,11 @@ function generateComments(array) {
   for (var i = 0; i <= number; i++) {
     newArray.push(array[i]);
   }
-
   return newArray;
 }
 
 // формируем фрагменты
-function createFragment(obj) {
+function createFragment(obj, index) {
   // клон элемента – со всеми атрибутами и дочерними элементами
   var cloneElement = template.cloneNode(true);
   var image = cloneElement.querySelector('.picture__img');
@@ -75,8 +74,9 @@ function createFragment(obj) {
   var imageLikes = cloneElement.querySelector('.picture__likes');
 
   image.src = obj.src;
-  imageComments.textContent = obj.comments;
+  imageComments.textContent = obj.comments.length;
   imageLikes.textContent = obj.likes;
+  cloneElement.dataset.objIndex = index;
 
   return cloneElement;
 }
@@ -84,27 +84,9 @@ function createFragment(obj) {
 // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
 function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
-    fragment.appendChild(createFragment(arrayElements[i]));
+    
+    fragment.appendChild(createFragment(arrayElements[i], i));
   }
-}
-
-// создание полноэкранного показа изображения
-function openBigPictureOverlay(obj) {
-  bigPicture.querySelector('.big-picture__img img').src = obj.src;
-  bigPicture.querySelector('.likes-count').textContent = obj.likes;
-  bigPicture.querySelector('.comments-count').textContent = obj.comments.length;
-  bigPicture.querySelector('.social__caption').textContent = obj.description;
-
-  for (var i = 0; i < obj.comments.length; i++) {
-    fragment.appendChild(createCommentItem(obj.comments[i], names));
-  }
-
-  deleteDefaultComments(bigPictureComments);
-  bigPictureComments.appendChild(fragment);
-
-  bigPicture.classList.remove('hidden');
-  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
-  bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
 }
 
 // Создает li пользователей написавших комментарий
@@ -301,24 +283,34 @@ addEventToGalleryItem(galleryItems);
 function fillImgPopup(evt) {
   for (var m = 0; m < evt.path.length; m++) {
     if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
-      var clickedObj = {};
       var clickedElement = evt.path[m];
-      clickedObj.url = clickedElement.querySelector('img').getAttribute('src');
-      clickedObj.likes = clickedElement.querySelector('.picture__likes').textContent;
-      clickedObj.comments = clickedElement.querySelector('.picture__comments').textContent;
-      openGalleryPhoto(clickedObj);
+      openBigPictureOverlay(templateArray[clickedElement.dataset.objIndex]);
       openPopup(bigPicture);
+
+      break;
     }
   }
 }
 
-function openGalleryPhoto(obj) {
+// создание полноэкранного показа изображения
+function openBigPictureOverlay(obj) {
   var bigPictureImages = bigPicture.querySelector('.big-picture__img img');
   var likesCount = bigPicture.querySelector('.likes-count');
-  var socialComments = bigPicture.querySelector('.social__comment');
-  bigPictureImages.setAttribute('src', obj.url);
+  var commentsCount = bigPicture.querySelector('.comments-count');
+
+  bigPictureImages.setAttribute('src', obj.src);
   likesCount.textContent = obj.likes;
-  socialComments.textContent = obj.comments;
+  commentsCount.textContent = obj.comments.length;
+
+  for (var i = 0; i < obj.comments.length; i++) {
+    fragment.appendChild(createCommentItem(obj.comments[i], names));
+  }
+
+  deleteDefaultComments(bigPictureComments);
+  bigPictureComments.appendChild(fragment);
+
+  bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
+  bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');
 }
 
 
