@@ -22,6 +22,7 @@ var names = ['Лёля', 'Слава', 'Аня', 'Ваня', 'Елена', 'Во
 var pictures = document.querySelector('.pictures');
 var template = document.querySelector('#picture').content.querySelector('.picture');
 var fragment = document.createDocumentFragment();
+
 var bigPicture = document.querySelector('.big-picture');
 var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 var bigPictureComments = document.querySelector('.social__comments');
@@ -84,10 +85,17 @@ function createFragment(obj, index) {
 // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
 function createElements(arrayElements) {
   for (var i = 0; i < arrayElements.length; i++) {
-    
     fragment.appendChild(createFragment(arrayElements[i], i));
   }
 }
+
+
+
+
+
+
+
+
 
 // Создает li пользователей написавших комментарий
 function createCommentItem(comment, arrNames) {
