@@ -5,8 +5,8 @@
   var QUANTITY = 25;
   var pictures = document.querySelector('.pictures');
   var template = document.querySelector('#picture').content.querySelector('.picture');
-  var fragment = document.createDocumentFragment();
-  var templateArray = createDataArray();   // массив элементов  ---- как передать массив обьектов в другой модуль
+  window.fragment = document.createDocumentFragment();
+  window.templateArray = createDataArray();   // массив элементов  ---- как передать массив обьектов в другой модуль
 
   console.log(templateArray);
   // формирует массив элементов

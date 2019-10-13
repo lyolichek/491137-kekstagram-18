@@ -6,6 +6,7 @@
   var bigPictureComments = document.querySelector('.social__comments');
   var bigPictureComment = document.querySelector('.social__comment');
   var galleryItems = document.querySelectorAll('a.picture');
+  var names = ['Лёля', 'Слава', 'Аня', 'Ваня', 'Елена', 'Вова'];
 
   function addEventToGalleryItem(itemsArray) {
     for (var l = 0; l < itemsArray.length; l++) {
