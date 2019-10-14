@@ -52,7 +52,5 @@
   }
 
   createElements(templateArray);
-
-  // наполняем контейнер pictures элементами
   pictures.appendChild(fragment);
 })();

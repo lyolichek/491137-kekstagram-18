@@ -26,11 +26,6 @@
     }
   }
 
-  bigPictureCancel.addEventListener('click', function (evt) {
-    evt.preventDefault();
-    window.popup.closePopup(bigPicture);
-  });
-
   // создание полноэкранного показа изображения
   function openBigPictureOverlay(obj) {
     var bigPictureImages = bigPicture.querySelector('.big-picture__img img');
@@ -67,6 +62,11 @@
   function deleteDefaultComments(listOfComments) {
     listOfComments.innerHTML = '';
   }
+
+  bigPictureCancel.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.popup.closePopup(bigPicture);
+  });
 
   addEventToGalleryItem(galleryItems);
 })();

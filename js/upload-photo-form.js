@@ -11,17 +11,6 @@
   var inputHashtags = document.querySelector('.text__hashtags');
   var inputComments = document.querySelector('.text__description');
 
-  inputHashtags.addEventListener('change', function () {
-    var hashtagsArr = inputHashtags.value.split(' ');
-    var errorCode = checkHashtag(hashtagsArr);
-
-    if (errorCode !== '') {
-      inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
-    } else {
-      inputHashtags.setCustomValidity(errorCode);
-    }
-  });
-
   function checkHashtag(array) {
     if (array.length > 5) {
       return 'max';
@@ -46,6 +35,17 @@
 
     return '';
   }
+
+  inputHashtags.addEventListener('change', function () {
+    var hashtagsArr = inputHashtags.value.split(' ');
+    var errorCode = checkHashtag(hashtagsArr);
+
+    if (errorCode !== '') {
+      inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
+    } else {
+      inputHashtags.setCustomValidity(errorCode);
+    }
+  });
 
   // Добавление комментария к изображению
   inputComments.addEventListener('change', function () {
