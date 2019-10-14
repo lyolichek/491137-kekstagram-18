@@ -8,7 +8,6 @@
     'same': 'Есть повторяющиеся хештеги',
     'maxLength': 'Слишком длинный хештег'
   };
-
   var inputHashtags = document.querySelector('.text__hashtags');
   var inputComments = document.querySelector('.text__description');
 

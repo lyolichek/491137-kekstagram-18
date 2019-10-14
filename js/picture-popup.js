@@ -18,7 +18,7 @@
     for (var m = 0; m < evt.path.length; m++) {
       if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
         var clickedElement = evt.path[m];
-        openBigPictureOverlay(templateArray[clickedElement.dataset.objIndex]); // !!!!!! не работает
+        openBigPictureOverlay(templateArray[clickedElement.dataset.objIndex]);
         window.popup.openPopup(bigPicture);
 
         break;
