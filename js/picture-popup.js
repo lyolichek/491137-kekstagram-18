@@ -18,7 +18,7 @@
     for (var m = 0; m < evt.path.length; m++) {
       if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
         var clickedElement = evt.path[m];
-        openBigPictureOverlay(templateArray[clickedElement.dataset.objIndex]);
+        openBigPictureOverlay(window.templateArray[clickedElement.dataset.objIndex]);
         window.popup.openPopup(bigPicture);
 
         break;
@@ -37,11 +37,11 @@
     commentsCount.textContent = obj.comments.length;
 
     for (var i = 0; i < obj.comments.length; i++) {
-      fragment.appendChild(createCommentItem(obj.comments[i], names));
+      window.fragment.appendChild(createCommentItem(obj.comments[i], names));
     }
 
     deleteDefaultComments(bigPictureComments);
-    bigPictureComments.appendChild(fragment);
+    bigPictureComments.appendChild(window.fragment);
 
     bigPicture.querySelector('.social__comment-count').classList.add('visually-hidden');
     bigPicture.querySelector('.comments-loader').classList.add('visually-hidden');

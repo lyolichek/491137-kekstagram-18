@@ -7,7 +7,7 @@
 
       document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === 27) {
-          closePopup(element);
+          this.closePopup(element);
         }
       });
     },
@@ -15,5 +15,5 @@
     closePopup: function (element) {
       element.classList.add('hidden');
     }
-  }
+  };
 })();
