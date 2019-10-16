@@ -2,31 +2,18 @@
 
 (function () {
 
-  var QUANTITY = 25;
   var pictures = document.querySelector('.pictures');
   var template = document.querySelector('#picture').content.querySelector('.picture');
-  window.fragment = document.createDocumentFragment();
-  window.templateArray = createDataArray();
+  var fragment = document.createDocumentFragment();
 
-  // формирует массив элементов
-  function createDataArray() {
-    var arrayObj = [];
-    for (var i = 0; i < QUANTITY; i++) {
-      arrayObj.push(createDataObject(i + 1));
-    }
+  window.templateArray = [];
 
-    return arrayObj;
-  }
-
-  // формируем объект
-  function createDataObject(i) {
-    return {
-      src: 'photos/' + i + '.jpg',
-      likes: window.utils.randomInteger(5, 200),
-      comments: window.comments.generateComments(),
-      description: 'test'
-    };
-  }
+  var onLoad = function (data) {
+    window.templateArray = data;
+    createElements(data);
+    pictures.appendChild(fragment); // наполняем контейнер pictures элементами
+    window.addEventToGalleryItem();
+  };
 
   // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
   function createElements(arrayElements) {
@@ -43,7 +30,7 @@
     var imageComments = cloneElement.querySelector('.picture__comments');
     var imageLikes = cloneElement.querySelector('.picture__likes');
 
-    image.src = obj.src;
+    image.src = obj.url;
     imageComments.textContent = obj.comments.length;
     imageLikes.textContent = obj.likes;
     cloneElement.dataset.objIndex = index;
@@ -51,6 +38,6 @@
     return cloneElement;
   }
 
-  createElements(templateArray);
-  pictures.appendChild(fragment);
+  window.load(window.utils.serverLink + '/data', onLoad);
 })();
+
