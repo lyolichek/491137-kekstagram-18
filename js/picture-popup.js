@@ -19,7 +19,7 @@
       if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
         var clickedElement = evt.path[m];
         openBigPictureOverlay(window.templateArray[clickedElement.dataset.objIndex]);
-        window.popup.openPopup(bigPicture);
+        window.popup.open(bigPicture);
 
         break;
       }
@@ -65,7 +65,7 @@
 
   bigPictureCancel.addEventListener('click', function (evt) {
     evt.preventDefault();
-    window.popup.closePopup(bigPicture);
+    window.popup.close(bigPicture);
   });
 
   addEventToGalleryItem(galleryItems);

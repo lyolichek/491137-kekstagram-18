@@ -2,26 +2,11 @@
 
 (function () {
   var FILTERS = {
-    'effect-chrome': function (value) {
-      imageUploadPreview.classList.add('effects__preview--chrome');
-      imageUploadPreview.style.filter = 'grayscale(' + parseInt(value, 10) * 0.01 + ')';
-    },
-    'effect-sepia': function (value) {
-      imageUploadPreview.classList.add('effects__preview--sepia');
-      imageUploadPreview.style.filter = 'sepia(' + parseInt(value, 10) * 0.01 + ')';
-    },
-    'effect-marvin': function (value) {
-      imageUploadPreview.classList.add('effects__preview--marvin');
-      imageUploadPreview.style.filter = 'invert(' + parseInt(value, 10) * 0.01 + ')';
-    },
-    'effect-phobos': function (value) {
-      imageUploadPreview.classList.add('effects__preview--phobos');
-      imageUploadPreview.style.filter = 'blur(' + parseInt(value, 10) * 0.03 + 'px' + ')';
-    },
-    'effect-heat': function (value) {
-      imageUploadPreview.classList.add('effects__preview--heat');
-      imageUploadPreview.style.filter = 'brightness(' + parseInt(value, 10) * 0.03 + ')';
-    }
+    'effect-chrome': 'effects__preview--chrome',
+    'effect-sepia': 'effects__preview--sepia',
+    'effect-marvin': 'effects__preview--marvin',
+    'effect-phobos': 'effects__preview--phobos',
+    'effect-heat': 'effects__preview--heat'
   };
   var STEP = 25;
   var uploadFile = document.querySelector('#upload-file');
@@ -38,7 +23,6 @@
   var imageUploadEffects = document.querySelector('.img-upload__effects');
   var effectsItems = imageUploadEffects.querySelectorAll('.effects__item');
 
-  var effectLevel = uploadOverlay.querySelector('.img-upload__effect-level');
   var effectLevelLine = uploadOverlay.querySelector('.effect-level__line');
   var effectLevelPin = uploadOverlay.querySelector('.effect-level__pin');
   var effectLevelDepth = uploadOverlay.querySelector('.effect-level__depth');
@@ -47,14 +31,15 @@
   var newPinPosiition = 0;
 
   uploadFile.addEventListener('change', function () {
-    window.popup.openPopup(uploadOverlay);
+    window.popup.open(uploadOverlay);
   });
 
   uploadOverlayCancel.addEventListener('click', function (evt) {
     evt.preventDefault();
-    window.popup.closePopup(uploadOverlay);
+    window.popup.close(uploadOverlay);
   });
 
+  //2.1. Масштаб
   buttonSmall.addEventListener('click', function (evt) {
     evt.preventDefault();
     changeValue(currentValue, false);
@@ -92,7 +77,8 @@
       imageUploadPreview.removeAttribute('class');
 
       if (FILTERS[filterName]) {
-        FILTERS[filterName](currentPinPossition);
+        imageUploadPreview.classList.add(FILTERS[filterName]);
+        applayFilter(imageUploadPreview, currentPinPossition);
       }
     });
   }
@@ -114,7 +100,7 @@
         newPinPosiition = 100;
       }
 
-      applayFilter(newPinPosiition, imageUploadPreview);
+      applayFilter(imageUploadPreview, newPinPosiition);
       effectLevelPin.style.left = newPinPosiition + '%';
       effectLevelDepth.style.width = newPinPosiition + '%';
     }
@@ -130,7 +116,7 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  function applayFilter(value, element) {
+  function applayFilter(element, value) {
     var elementClass = element.getAttribute('class');
 
     if(elementClass === 'effects__preview--chrome') {

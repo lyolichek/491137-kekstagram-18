@@ -56,4 +56,60 @@
       inputComments.setCustomValidity('');
     }
   });
+
+  // Блок ошибки
+  var errorBlock = document.querySelector('#error').content.querySelector('.error');
+  var btnsErrorClose = errorBlock.querySelectorAll('.error__button');
+
+  function onError() {
+
+  }
+
+
+
+
+
 })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

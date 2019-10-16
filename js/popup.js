@@ -2,17 +2,17 @@
 
 (function () {
   window.popup = {
-    openPopup: function (element) {
+    open: function (element) {
       element.classList.remove('hidden');
 
       document.addEventListener('keydown', function (evt) {
         if (evt.keyCode === 27) {
-          this.closePopup(element);
+          this.close(element);
         }
       });
     },
 
-    closePopup: function (element) {
+    close: function (element) {
       element.classList.add('hidden');
     }
   };
