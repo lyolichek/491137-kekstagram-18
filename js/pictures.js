@@ -6,10 +6,13 @@
   var template = document.querySelector('#picture').content.querySelector('.picture');
   var fragment = document.createDocumentFragment();
 
+  window.templateArray = [];
+
   var onLoad = function (data) {
+    window.templateArray = data;
     createElements(data);
     pictures.appendChild(fragment); // наполняем контейнер pictures элементами
-    console.log(data)
+    window.addEventToGalleryItem();
   };
 
   // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива

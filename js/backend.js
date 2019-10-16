@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.load = function (url, onLoad, onError) {
+  window.load = function (url, onLoad) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -10,19 +10,13 @@
       if (xhr.status === 200) {
         onLoad(xhr.response);
       } else {
-        onError();
+        window.popup.getError();
       }
     });
 
     xhr.addEventListener('error', function () {
-      onError();
+      window.popup.getError();
     });
-
-    xhr.addEventListener('timeout', function () {
-      onError();
-    });
-
-    xhr.timeout = 10000;
 
     xhr.open('GET', url);
     xhr.send();
