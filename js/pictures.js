@@ -38,6 +38,6 @@
     return cloneElement;
   }
 
-  window.load(window.utils.serverLink + '/data', onLoad);
+  window.backend.load(window.utils.serverLink + '/data', onLoad);
 })();
 

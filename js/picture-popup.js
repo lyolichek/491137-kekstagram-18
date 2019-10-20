@@ -71,4 +71,11 @@
     evt.preventDefault();
     window.popup.close(bigPicture);
   });
+
+  document.addEventListener('keydown', function (evt) {
+    //evt.preventDefault();
+    if (evt.keyCode === 27) {
+      window.popup.close(bigPicture);
+    }
+  });
 })();

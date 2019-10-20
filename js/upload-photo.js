@@ -9,6 +9,7 @@
     'effect-heat': 'effects__preview--heat'
   };
   var STEP = 25;
+  var uploadForm = document.querySelector('.img-upload__form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
   var uploadOverlayCancel = uploadOverlay.querySelector('.img-upload__cancel');
@@ -30,6 +31,12 @@
   var currentDepthPossition = effectLevelDepth.style.width = 20 + '%';
   var newPinPosiition = 0;
 
+  var blockPictures = document.querySelector('.pictures');
+  var errorBlock = document.querySelector('#error').content.querySelector('.error');
+  var buttonError = errorBlock.querySelectorAll('.error__button');
+  var successBlock = document.querySelector('#success').content.querySelector('.success');
+  var buttonSuccess = successBlock.querySelector('.success__button');
+
   uploadFile.addEventListener('change', function () {
     window.popup.open(uploadOverlay);
   });
@@ -39,7 +46,7 @@
     window.popup.close(uploadOverlay);
   });
 
-  //2.1. Масштаб
+  // 2.1. Масштаб
   buttonSmall.addEventListener('click', function (evt) {
     evt.preventDefault();
     changeValue(currentValue, false);
@@ -135,4 +142,39 @@
       element.style.filter = 'brightness(' + parseInt(value, 10) * 0.03 + ')';
     }
   }
+
+  document.addEventListener('keydown', function (evt) {
+    evt.preventDefault();
+    if (evt.keyCode === 27) {
+      window.popup.close(uploadOverlay);
+    }
+  });
+
+  // Отправка формы
+  var onLoad = function () {
+    window.popup.close(uploadOverlay);
+    uploadForm.reset();
+    blockPictures.appendChild(successBlock);
+
+    buttonSuccess.addEventListener('click', function () {
+      successBlock.remove();
+    });
+  };
+
+  // Ошибка
+  var onError = function () {
+    window.popup.close(uploadOverlay);
+    uploadForm.reset();
+    buttonError[1].remove();
+    blockPictures.appendChild(errorBlock);
+
+    buttonError[0].addEventListener('click', function () {
+      errorBlock.remove();
+    });
+  };
+
+  uploadForm.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    window.backend.upload(new FormData(uploadForm), onLoad, onError);
+  });
 })();
