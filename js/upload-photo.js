@@ -126,19 +126,19 @@
   function applayFilter(element, value) {
     var elementClass = element.getAttribute('class');
 
-    if(elementClass === 'effects__preview--chrome') {
+    if (elementClass === 'effects__preview--chrome') {
       element.style.filter = 'grayscale(' + parseInt(value, 10) * 0.01 + ')';
     }
-    if(elementClass === 'effects__preview--sepia') {
+    if (elementClass === 'effects__preview--sepia') {
       element.style.filter = 'sepia(' + parseInt(value, 10) * 0.01 + ')';
     }
-    if(elementClass === 'effects__preview--marvin') {
+    if (elementClass === 'effects__preview--marvin') {
       element.style.filter = 'invert(' + parseInt(value, 10) * 0.01 + ')';
     }
-    if(elementClass === 'effects__preview--phobos') {
+    if (elementClass === 'effects__preview--phobos') {
       element.style.filter = 'blur(' + parseInt(value, 10) * 0.03 + 'px' + ')';
     }
-    if(elementClass === 'effects__preview--heat') {
+    if (elementClass === 'effects__preview--heat') {
       element.style.filter = 'brightness(' + parseInt(value, 10) * 0.03 + ')';
     }
   }

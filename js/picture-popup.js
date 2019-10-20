@@ -3,8 +3,8 @@
 (function () {
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-  var commentsList = document.querySelector('.social__comments');  // commentsList
-  var commentTemplate = document.querySelector('.social__comment');   // commentTemplate
+  var commentsList = document.querySelector('.social__comments');
+  var commentTemplate = document.querySelector('.social__comment');
   var fragment = document.createDocumentFragment();
 
   window.addEventToGalleryItem = function () {
@@ -73,7 +73,7 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    //evt.preventDefault();
+    evt.preventDefault();
     if (evt.keyCode === 27) {
       window.popup.close(bigPicture);
     }
