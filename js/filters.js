@@ -8,10 +8,9 @@
       var randomArray = [];
 
       for (var i = 0; i < RANDOM_PHOTOS; i++) {
-        var newItem = arr[window.utils.randomInteger(0, arr.length - 1)];
+        var newItem = copyArray[window.utils.randomInteger(0, copyArray.length - 1)];
         randomArray.push(newItem);
-
-        console.log(copyArray);
+        copyArray.splice(copyArray.indexOf(newItem), 1);
       }
 
       return randomArray;
@@ -45,10 +44,6 @@
     }, 500);
   };
 
-  var onError = function (data) {
-
-  };
-
   function createElements (arrElements) {
     var deletedItems = window.pictures.querySelectorAll('a.picture');
     var sortedArr = arrElements.slice(0);
@@ -56,7 +51,7 @@
     deletedItems.forEach(function (item) {
       window.pictures.removeChild(item);
     });
-    //console.log(arrElements);
+
     PICTURE_FILTERS[filterName](sortedArr).forEach(function (element) {
       window.fragment.appendChild(window.createFragment(element));
     });
@@ -68,7 +63,7 @@
       temp.classList.remove('img-filters__button--active');
       btn.classList.add('img-filters__button--active');
       filterName = btn.getAttribute('id');
-      window.backend.load(window.utils.serverLink + '/data', onLoad, onError);
+      window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
     });
   });
 

@@ -31,11 +31,12 @@
   var currentDepthPossition = effectLevelDepth.style.width = 20 + '%';
   var newPinPosiition = 0;
 
-  var blockPictures = document.querySelector('.pictures');
-  var errorBlock = document.querySelector('#error').content.querySelector('.error');
-  var buttonError = errorBlock.querySelectorAll('.error__button');
   var successBlock = document.querySelector('#success').content.querySelector('.success');
   var buttonSuccess = successBlock.querySelector('.success__button');
+
+  window.blockPictures = document.querySelector('.pictures');
+  window.errorBlock = document.querySelector('#error').content.querySelector('.error');
+  window.buttonError = errorBlock.querySelectorAll('.error__button');
 
   uploadFile.addEventListener('change', function () {
     window.popup.open(uploadOverlay);
@@ -154,7 +155,7 @@
   var onLoad = function () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
-    blockPictures.appendChild(successBlock);
+    window.blockPictures.appendChild(successBlock);
 
     buttonSuccess.addEventListener('click', function () {
       successBlock.remove();
@@ -165,12 +166,8 @@
   var onError = function () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
-    buttonError[1].remove();
-    blockPictures.appendChild(errorBlock);
 
-    buttonError[0].addEventListener('click', function () {
-      errorBlock.remove();
-    });
+    window.popup.onError();
   };
 
   uploadForm.addEventListener('submit', function(evt) {
