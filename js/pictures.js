@@ -2,28 +2,28 @@
 
 (function () {
 
-  var pictures = document.querySelector('.pictures');
-  var template = document.querySelector('#picture').content.querySelector('.picture');
-  var fragment = document.createDocumentFragment();
-
+  window.pictures = document.querySelector('.pictures');
+  window.fragment = document.createDocumentFragment();
   window.templateArray = [];
+
+  var template = document.querySelector('#picture').content.querySelector('.picture');
 
   var onLoad = function (data) {
     window.templateArray = data;
     createElements(data);
-    pictures.appendChild(fragment); // наполняем контейнер pictures элементами
+    window.pictures.appendChild(window.fragment); // наполняем контейнер pictures элементами
     window.addEventToGalleryItem();
   };
 
   // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
   function createElements(arrayElements) {
     for (var i = 0; i < arrayElements.length; i++) {
-      fragment.appendChild(createFragment(arrayElements[i], i));
+      window.fragment.appendChild(window.createFragment(arrayElements[i], i));
     }
   }
 
   // формируем фрагменты
-  function createFragment(obj, index) {
+  window.createFragment = function (obj, index) {
     // клон элемента – со всеми атрибутами и дочерними элементами
     var cloneElement = template.cloneNode(true);
     var image = cloneElement.querySelector('.picture__img');
