@@ -1,30 +1,68 @@
 'use strict';
 
 (function () {
+  var RANDOM_PHOTOS = 10;
+  var PICTURE_FILTERS = {
+    'filter-popular': function (arr) {
+      return arr;
+    },
+    'filter-random': function (arr) {
+      var copyArray = arr.slice();
+      var randomArray = [];
 
-  window.pictures = document.querySelector('.pictures');
+      for (var i = 0; i < RANDOM_PHOTOS; i++) {
+        var newItem = copyArray[window.utils.randomInteger(0, copyArray.length - 1)];
+        randomArray.push(newItem);
+        copyArray.splice(copyArray.indexOf(newItem), 1);
+      }
+
+      return randomArray;
+    },
+    'filter-discussed': function (arr) {
+      var copyArray = arr.slice();
+
+      copyArray.sort(function (a, b) {
+        return b.comments.length - a.comments.length;
+      });
+      return copyArray;
+    }
+  };
+
+  var pictures = document.querySelector('.pictures');
+  var template = document.querySelector('#picture').content.querySelector('.picture');
+
+  var filters = document.querySelector('.img-filters');
+  var buttons = filters.querySelectorAll('.img-filters__button');
+  var filterName = 'filter-popular';
+
   window.fragment = document.createDocumentFragment();
   window.templateArray = [];
 
-  var template = document.querySelector('#picture').content.querySelector('.picture');
-
-  var onLoad = function (data) {
+  function onLoad (data) {
     window.templateArray = data;
     createElements(data);
-    window.pictures.appendChild(window.fragment); // наполняем контейнер pictures элементами
+    pictures.appendChild(fragment); // наполняем контейнер pictures элементами
     window.addEventToGalleryItem();
-  };
+  }
 
   // создание DOM-элементов, соответствующие фотографиям и заполните их данными из массива
   function createElements(arrayElements) {
-    for (var i = 0; i < arrayElements.length; i++) {
-      window.fragment.appendChild(window.createFragment(arrayElements[i], i));
+    var sortedArr = arrayElements.slice(0);
+    var deletedItems = pictures.querySelectorAll('a.picture');
+    window.filtersArray = PICTURE_FILTERS[filterName](sortedArr);
+
+    //console.log(true);
+    deletedItems.forEach(function (item) {
+      pictures.removeChild(item);
+    });
+
+    for (var i = 0; i < window.filtersArray.length; i++) {
+      window.fragment.appendChild(createFragment(window.filtersArray[i], i));
     }
   }
 
   // формируем фрагменты
-  window.createFragment = function (obj, index) {
-    // клон элемента – со всеми атрибутами и дочерними элементами
+  function createFragment(obj, index) {
     var cloneElement = template.cloneNode(true);
     var image = cloneElement.querySelector('.picture__img');
     var imageComments = cloneElement.querySelector('.picture__comments');
@@ -38,6 +76,17 @@
     return cloneElement;
   }
 
-  window.backend.load(window.utils.serverLink + '/data', onLoad);
-})();
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var temp = filters.querySelector('.img-filters__button--active');
+      temp.classList.remove('img-filters__button--active');
+      btn.classList.add('img-filters__button--active');
+      filterName = btn.getAttribute('id');
+      window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
+    });
+  });
 
+  window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
+
+  filters.classList.remove('img-filters--inactive');
+})();

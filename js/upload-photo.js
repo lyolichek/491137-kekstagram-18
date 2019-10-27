@@ -47,7 +47,9 @@
     window.popup.close(uploadOverlay);
   });
 
-  // 2.1. Масштаб
+
+  // 2.1. изменение масштаба изображения
+
   buttonSmall.addEventListener('click', function (evt) {
     evt.preventDefault();
     changeValue(currentValue, false);
@@ -73,6 +75,9 @@
   function resizeImage(value) {
     imageUploadPreview.style.transform = 'scale(' + value / 100 + ')';
   }
+
+
+  // 2.2. Наложение эффекта на изображение
 
   for (var i = 0; i < effectsItems.length; i++) {
     addThumbnailClickHandler(effectsItems[i]);
