@@ -44,7 +44,7 @@
     allCommentsCount.textContent = obj.comments.length;
 
     for (var i = 0; i < obj.comments.length; i++) {
-      fragment.appendChild(createCommentItem(obj.comments[i]));  // cоздались комментарии
+      fragment.appendChild(createCommentItem(obj.comments[i]));
     }
 
     deleteDefaultComments(commentsList);
@@ -82,7 +82,7 @@
   }
 
   // Изменяет значение количества комментариев
-  function getCommentsCount(){
+  function getCommentsCount() {
     var commentsCount = document.querySelector('.social__comment-count');
     var allComments = bigPicture.querySelectorAll('.social__comment');
     var commentsHidden = bigPicture.querySelectorAll('.social__comment.visually-hidden');

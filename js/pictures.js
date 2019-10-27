@@ -38,10 +38,10 @@
   window.fragment = document.createDocumentFragment();
   window.templateArray = [];
 
-  function onLoad (data) {
+  function onLoad(data) {
     window.templateArray = data;
     createElements(data);
-    pictures.appendChild(fragment); // наполняем контейнер pictures элементами
+    pictures.appendChild(window.fragment); // наполняем контейнер pictures элементами
     window.addEventToGalleryItem();
   }
 
@@ -51,7 +51,6 @@
     var deletedItems = pictures.querySelectorAll('a.picture');
     window.filtersArray = PICTURE_FILTERS[filterName](sortedArr);
 
-    //console.log(true);
     deletedItems.forEach(function (item) {
       pictures.removeChild(item);
     });

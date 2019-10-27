@@ -175,7 +175,7 @@
     window.popup.onError();
   };
 
-  uploadForm.addEventListener('submit', function(evt) {
+  uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.backend.upload(new FormData(uploadForm), onLoad, onError);
   });
