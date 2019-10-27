@@ -11,6 +11,9 @@
   var inputHashtags = document.querySelector('.text__hashtags');
   var inputComments = document.querySelector('.text__description');
 
+
+  // 2.3. Хэш-теги
+
   function checkHashtag(array) {
     if (array.length > 5) {
       return 'max';
@@ -47,7 +50,9 @@
     }
   });
 
-  // Добавление комментария к изображению
+
+  // 2.4. Комментарий
+
   inputComments.addEventListener('change', function () {
     var str = inputComments.value;
     if (str.length > 140) {
@@ -57,46 +62,3 @@
     }
   });
 })();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
