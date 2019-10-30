@@ -37,6 +37,7 @@
   window.blockPictures = document.querySelector('.pictures');
   window.errorBlock = document.querySelector('#error').content.querySelector('.error');
   window.buttonError = errorBlock.querySelectorAll('.error__button');
+  
 
   uploadFile.addEventListener('change', function () {
     window.popup.open(uploadOverlay);
