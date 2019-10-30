@@ -28,7 +28,7 @@
   var effectLevelPin = uploadOverlay.querySelector('.effect-level__pin');
   var effectLevelDepth = uploadOverlay.querySelector('.effect-level__depth');
   var currentPinPossition = effectLevelPin.style.left = 20 + '%';
-  var currentDepthPossition = effectLevelDepth.style.width = 20 + '%';
+
   var newPinPosiition = 0;
 
   var successBlock = document.querySelector('#success').content.querySelector('.success');
@@ -36,7 +36,7 @@
 
   window.blockPictures = document.querySelector('.pictures');
   window.errorBlock = document.querySelector('#error').content.querySelector('.error');
-  window.buttonError = errorBlock.querySelectorAll('.error__button');
+  window.buttonError = window.errorBlock.querySelectorAll('.error__button');
 
   uploadFile.addEventListener('change', function () {
     window.popup.open(uploadOverlay);
@@ -150,8 +150,8 @@
   }
 
   document.addEventListener('keydown', function (evt) {
-    evt.preventDefault();
     if (evt.keyCode === 27) {
+      evt.preventDefault();
       window.popup.close(uploadOverlay);
     }
   });
