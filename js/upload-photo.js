@@ -28,7 +28,7 @@
   var effectLevelPin = uploadOverlay.querySelector('.effect-level__pin');
   var effectLevelDepth = uploadOverlay.querySelector('.effect-level__depth');
   var currentPinPossition = effectLevelPin.style.left = 20 + '%';
-  var currentDepthPossition = effectLevelDepth.style.width = 20 + '%';
+
   var newPinPosiition = 0;
 
   var successBlock = document.querySelector('#success').content.querySelector('.success');
