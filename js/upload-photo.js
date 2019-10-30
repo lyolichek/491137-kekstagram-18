@@ -150,8 +150,8 @@
   }
 
   document.addEventListener('keydown', function (evt) {
-    evt.preventDefault();
     if (evt.keyCode === 27) {
+      evt.preventDefault();
       window.popup.close(uploadOverlay);
     }
   });
