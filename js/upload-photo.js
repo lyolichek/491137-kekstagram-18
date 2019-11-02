@@ -2,6 +2,7 @@
 
 (function () {
   var FILTERS = {
+    'effect-none': 'effects__preview--none',
     'effect-chrome': 'effects__preview--chrome',
     'effect-sepia': 'effects__preview--sepia',
     'effect-marvin': 'effects__preview--marvin',
@@ -24,11 +25,11 @@
   var imageUploadEffects = document.querySelector('.img-upload__effects');
   var effectsItems = imageUploadEffects.querySelectorAll('.effects__item');
 
-  var effectLevelLine = uploadOverlay.querySelector('.effect-level__line');
+  var effectLevel = uploadOverlay.querySelector('.effect-level');
   var effectLevelPin = uploadOverlay.querySelector('.effect-level__pin');
   var effectLevelDepth = uploadOverlay.querySelector('.effect-level__depth');
-  var currentPinPossition = effectLevelPin.style.left = 20 + '%';
 
+  var currentPinPossition = 0;
   var newPinPosiition = 0;
 
   var successBlock = document.querySelector('#success').content.querySelector('.success');
@@ -37,6 +38,8 @@
   window.blockPictures = document.querySelector('.pictures');
   window.errorBlock = document.querySelector('#error').content.querySelector('.error');
   window.buttonError = window.errorBlock.querySelectorAll('.error__button');
+
+  effectLevel.style.display = 'none';
 
   uploadFile.addEventListener('change', function () {
     window.popup.open(uploadOverlay);
@@ -81,6 +84,7 @@
 
   for (var i = 0; i < effectsItems.length; i++) {
     addThumbnailClickHandler(effectsItems[i]);
+
   }
 
   function addThumbnailClickHandler(thumbnail) {
@@ -89,45 +93,23 @@
       var filterName = item.getAttribute('for');
       imageUploadPreview.removeAttribute('class');
 
-      if (FILTERS[filterName]) {
+      if (filterName === 'effect-none') {
+        imageUploadPreview.classList.add('effects__preview--none');
+        effectLevel.style.display = 'none';
+        imageUploadPreview.removeAttribute('style');
+      } else {
         imageUploadPreview.classList.add(FILTERS[filterName]);
-        applayFilter(imageUploadPreview, currentPinPossition);
+        effectLevel.style.display = 'block';
+        pinStartPosition();
+        applayFilter(imageUploadPreview, 100);
       }
     });
   }
 
-  effectLevelPin.addEventListener('mousedown', function (evt) {
-    var pinPosition = evt.clientX;
-    var lineWidth = getComputedStyle(effectLevelLine).width;
-
-    function getPinShift(evtPin) {
-      var pinShift = evtPin.clientX - pinPosition;
-
-      newPinPosiition = Math.round(parseInt(currentPinPossition, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
-
-      if (newPinPosiition < 0) {
-        newPinPosiition = 0;
-      }
-
-      if (newPinPosiition > 100) {
-        newPinPosiition = 100;
-      }
-
-      applayFilter(imageUploadPreview, newPinPosiition);
-      effectLevelPin.style.left = newPinPosiition + '%';
-      effectLevelDepth.style.width = newPinPosiition + '%';
-    }
-
-    function onMouseUp() {
-      currentPinPossition = newPinPosiition;
-
-      document.removeEventListener('mousemove', getPinShift);
-      document.removeEventListener('mouseup', onMouseUp);
-    }
-
-    document.addEventListener('mousemove', getPinShift);
-    document.addEventListener('mouseup', onMouseUp);
-  });
+  function pinStartPosition() {
+    currentPinPossition = effectLevelPin.style.left = '100%';
+    effectLevelDepth.style.width = '100%';
+  }
 
   function applayFilter(element, value) {
     var elementClass = element.getAttribute('class');
@@ -148,6 +130,40 @@
       element.style.filter = 'brightness(' + parseInt(value, 10) * 0.03 + ')';
     }
   }
+
+  effectLevelPin.addEventListener('mousedown', function (evt) {
+    var pinPosition = evt.clientX;
+    var effectLevelLine = uploadOverlay.querySelector('.effect-level__line');
+    var lineWidth = getComputedStyle(effectLevelLine).width;
+
+    function onMouseMove(evtPin) {
+      var pinShift = evtPin.clientX - pinPosition;
+
+      newPinPosiition = Math.round(parseInt(currentPinPossition, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
+
+      if (newPinPosiition < 0) {
+        newPinPosiition = 0;
+      }
+
+      if (newPinPosiition > 100) {
+        newPinPosiition = 100;
+      }
+
+      applayFilter(imageUploadPreview, newPinPosiition);
+      effectLevelPin.style.left = newPinPosiition + '%';
+      effectLevelDepth.style.width = newPinPosiition + '%';
+    }
+
+    function onMouseUp() {
+      currentPinPossition = newPinPosiition;
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
   document.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 27) {
