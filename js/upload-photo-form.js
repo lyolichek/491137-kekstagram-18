@@ -1,8 +1,12 @@
 'use strict';
 
 (function () {
+  var COMMENTS_MAX_LENGTH = 140;
+  var HASHTAG_MAX_LENGTH = 20;
+  var MAX_HASHTAG = 5;
   var HASHTAG_ERRORS = {
     'symbol': 'Отсутствует обязательный символ #',
+    'symbol_only': 'Хэш-тег должен состоять из знака # и минимум 1 символа',
     'symbol_wrong': 'Символ # должен стоять в начале хештега',
     'max': 'Максимальное кол-во хештегов должно быть 5',
     'same': 'Есть повторяющиеся хештеги',
@@ -14,26 +18,38 @@
 
   // 2.3. Хэш-теги
 
+  inputHashtags.addEventListener('keydown', function (evt) {
+    evt.stopPropagation();
+  });
+
   function checkHashtag(array) {
-    if (array.length > 5) {
+    console.log(array);
+
+    if (array.length > MAX_HASHTAG) {
       return 'max';
     }
 
     for (var k = 0; k < array.length; k++) {
-      if (array[k].length > 20) {
+      if (array[k].length > HASHTAG_MAX_LENGTH) {
         return 'maxLength';
       }
-      if (array[k].indexOf('#') < 0) {
+      /*if (array[0] !== '#') {
         return 'symbol';
+      }*/
+      if (array[0] === '#') {
+        return 'symbol_only';
       }
       if (array[k].indexOf('#') > 0) {
         return 'symbol_wrong';
       }
-      for (var j = 0; j < array.length; j++) {
+      if(findSomeValue) {
+
+      }
+      /*for (var j = 0; j < array.length; j++) {
         if ((array[k].toLowerCase() === array[j].toLowerCase()) && (k !== j)) {
           return 'same';
         }
-      }
+      }*/
     }
 
     return '';
@@ -53,9 +69,13 @@
 
   // 2.4. Комментарий
 
+  inputComments.addEventListener('keydown', function (evt) {
+    evt.stopPropagation();
+  });
+
   inputComments.addEventListener('change', function () {
     var str = inputComments.value;
-    if (str.length > 140) {
+    if (str.length > COMMENTS_MAX_LENGTH) {
       inputComments.setCustomValidity('Комментарий не должен превышать 140-ка символов');
     } else {
       inputComments.setCustomValidity('');

@@ -1,13 +1,16 @@
 'use strict';
 
 (function () {
+  var STATUS_VALUE = 200;
+  var TIMEOUT_VALUE = 10000;
+
+  var xhr = new XMLHttpRequest();
+  xhr.responseType = 'json';
+
   window.backend = {
     load: function (url, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
       xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
+        if (xhr.status === STATUS_VALUE) {
           onLoad(xhr.response);
         } else {
           onError();
@@ -22,18 +25,15 @@
         onError();
       });
 
-      xhr.timeout = 10000;
+      xhr.timeout = TIMEOUT_VALUE;
 
       xhr.open('GET', url);
       xhr.send();
     },
 
     upload: function (data, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
       xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
+        if (xhr.status === STATUS_VALUE) {
           onLoad(xhr.response);
         } else {
           onError();

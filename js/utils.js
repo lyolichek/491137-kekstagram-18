@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  window.ESC = 27;
+
   window.utils = {
     randomInteger: function (min, max) {
       return Math.floor(min + Math.random() * (max + 1 - min));

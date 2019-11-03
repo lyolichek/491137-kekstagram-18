@@ -10,6 +10,7 @@
     'effect-heat': 'effects__preview--heat'
   };
   var STEP = 25;
+  var MAX_VALUE = 100;
   var uploadForm = document.querySelector('.img-upload__form');
   var uploadFile = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -66,7 +67,7 @@
   function changeValue(value, isGrow) {
     if (!isGrow && value > STEP) {
       value -= STEP;
-    } else if (isGrow && value < 100) {
+    } else if (isGrow && value < MAX_VALUE) {
       value += STEP;
     }
 
@@ -76,16 +77,15 @@
   }
 
   function resizeImage(value) {
-    imageUploadPreview.style.transform = 'scale(' + value / 100 + ')';
+    imageUploadPreview.style.transform = 'scale(' + value / MAX_VALUE + ')';
   }
 
 
   // 2.2. Наложение эффекта на изображение
 
-  for (var i = 0; i < effectsItems.length; i++) {
-    addThumbnailClickHandler(effectsItems[i]);
-
-  }
+  effectsItems.forEach(function (item) {
+    addThumbnailClickHandler(item);
+  });
 
   function addThumbnailClickHandler(thumbnail) {
     thumbnail.addEventListener('click', function () {
@@ -101,7 +101,7 @@
         imageUploadPreview.classList.add(FILTERS[filterName]);
         effectLevel.style.display = 'block';
         pinStartPosition();
-        applayFilter(imageUploadPreview, 100);
+        applayFilter(imageUploadPreview, MAX_VALUE);
       }
     });
   }
@@ -139,14 +139,14 @@
     function onMouseMove(evtPin) {
       var pinShift = evtPin.clientX - pinPosition;
 
-      newPinPosiition = Math.round(parseInt(currentPinPossition, 10) + (pinShift * 100) / parseInt(lineWidth, 10));
+      newPinPosiition = Math.round(parseInt(currentPinPossition, 10) + (pinShift * MAX_VALUE) / parseInt(lineWidth, 10));
 
       if (newPinPosiition < 0) {
         newPinPosiition = 0;
       }
 
-      if (newPinPosiition > 100) {
-        newPinPosiition = 100;
+      if (newPinPosiition > MAX_VALUE) {
+        newPinPosiition = MAX_VALUE;
       }
 
       applayFilter(imageUploadPreview, newPinPosiition);
@@ -166,14 +166,14 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.ESC) {
       evt.preventDefault();
       window.popup.close(uploadOverlay);
     }
   });
 
   // Отправка формы
-  var onLoad = function () {
+  function onLoad () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
     window.blockPictures.appendChild(successBlock);
@@ -181,15 +181,15 @@
     buttonSuccess.addEventListener('click', function () {
       successBlock.remove();
     });
-  };
+  }
 
   // Ошибка
-  var onError = function () {
+  function onError () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
 
     window.popup.onError();
-  };
+  }
 
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
