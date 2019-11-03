@@ -81,11 +81,11 @@
       temp.classList.remove('img-filters__button--active');
       btn.classList.add('img-filters__button--active');
       filterName = btn.getAttribute('id');
-      window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
+      window.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
     });
   });
 
-  window.backend.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
+  window.load(window.utils.serverLink + '/data', onLoad, window.popup.onError);
 
   filters.classList.remove('img-filters--inactive');
 })();

@@ -193,6 +193,6 @@
 
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.upload(new FormData(uploadForm), onLoad, onError);
+    window.upload(new FormData(uploadForm), onLoad, onError);
   });
 })();
