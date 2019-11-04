@@ -8,14 +8,12 @@
     var xhr = getXhr(onLoad, onError);
     xhr.open('GET', url);
     xhr.send();
-    console.log('fdfd');
   };
 
   window.upload = function (data, onLoad, onError) {
     var xhr = getXhr(onLoad, onError);
     xhr.open('POST', window.utils.serverLink);
     xhr.send(data);
-    console.log('fdfd2222');
   };
 
   var getXhr = function (onLoad, onError) {

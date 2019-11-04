@@ -55,9 +55,9 @@
       pictures.removeChild(item);
     });
 
-    for (var i = 0; i < window.filtersArray.length; i++) {
-      window.fragment.appendChild(createFragment(window.filtersArray[i], i));
-    }
+    window.filtersArray.forEach(function (filter, i) {
+      window.fragment.appendChild(createFragment(filter, i));
+    });
   }
 
   // формируем фрагменты

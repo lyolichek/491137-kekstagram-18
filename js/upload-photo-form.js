@@ -23,8 +23,6 @@
   });
 
   function checkHashtag(array) {
-    console.log(array);
-
     if (array.length > MAX_HASHTAG) {
       return 'max';
     }
@@ -33,23 +31,21 @@
       if (array[k].length > HASHTAG_MAX_LENGTH) {
         return 'maxLength';
       }
-      /*if (array[0] !== '#') {
+      if (array[k].indexOf('#') < 0) {
         return 'symbol';
-      }*/
-      if (array[0] === '#') {
-        return 'symbol_only';
       }
       if (array[k].indexOf('#') > 0) {
         return 'symbol_wrong';
       }
-      if(findSomeValue) {
-
+      if (array[k] === '#') {
+        return 'symbol_only';
       }
-      /*for (var j = 0; j < array.length; j++) {
+
+      for (var j = 0; j < array.length; j++) {
         if ((array[k].toLowerCase() === array[j].toLowerCase()) && (k !== j)) {
           return 'same';
         }
-      }*/
+      }
     }
 
     return '';
@@ -57,7 +53,8 @@
 
   inputHashtags.addEventListener('change', function () {
     var hashtagsArr = inputHashtags.value.split(' ');
-    var errorCode = checkHashtag(hashtagsArr);
+    var newhashtagsArr =hashtagsArr.filter(tag => tag && tag.length > 0);
+    var errorCode = checkHashtag(newhashtagsArr);
 
     if (errorCode !== '') {
       inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
