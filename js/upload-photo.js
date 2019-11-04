@@ -181,15 +181,14 @@
     buttonSuccess.addEventListener('click', function () {
       successBlock.remove();
     });
-  }
+  };
 
   // Ошибка
   var onError = function () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
-
     window.popup.onError();
-  }
+  };
 
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();

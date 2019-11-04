@@ -53,8 +53,15 @@
 
   inputHashtags.addEventListener('change', function () {
     var hashtagsArr = inputHashtags.value.split(' ');
-    var newhashtagsArr = hashtagsArr.filter(tag => tag && tag.length > 0);
-    var errorCode = checkHashtag(newhashtagsArr);
+    var newHashtagsArr = [];
+
+    hashtagsArr.forEach(function (tag) {
+      if(tag && tag.length > 0) {
+        newHashtagsArr.push(tag);
+      }
+    });
+
+    var errorCode = checkHashtag(newHashtagsArr);
 
     if (errorCode !== '') {
       inputHashtags.setCustomValidity(HASHTAG_ERRORS[errorCode]);
