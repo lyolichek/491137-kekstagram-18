@@ -56,7 +56,7 @@
     var newHashtagsArr = [];
 
     hashtagsArr.forEach(function (tag) {
-      if(tag && tag.length > 0) {
+      if (tag && tag.length > 0) {
         newHashtagsArr.push(tag);
       }
     });
