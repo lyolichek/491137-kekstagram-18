@@ -181,7 +181,7 @@
     buttonSuccess.addEventListener('click', function () {
       successBlock.remove();
     });
-  }
+  };
 
   // Ошибка
   var onError = function () {
@@ -189,7 +189,7 @@
     uploadForm.reset();
 
     window.popup.onError();
-  }
+  };
 
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
