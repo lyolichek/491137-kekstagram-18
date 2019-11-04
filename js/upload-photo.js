@@ -173,7 +173,7 @@
   });
 
   // Отправка формы
-  function onLoad () {
+  var onLoad = function () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
     window.blockPictures.appendChild(successBlock);
@@ -184,7 +184,7 @@
   }
 
   // Ошибка
-  function onError () {
+  var onError = function () {
     window.popup.close(uploadOverlay);
     uploadForm.reset();
 

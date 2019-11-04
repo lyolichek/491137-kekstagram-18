@@ -53,7 +53,7 @@
 
   inputHashtags.addEventListener('change', function () {
     var hashtagsArr = inputHashtags.value.split(' ');
-    var newhashtagsArr =hashtagsArr.filter(tag => tag && tag.length > 0);
+    var newhashtagsArr = hashtagsArr.filter(tag => tag && tag.length > 0);
     var errorCode = checkHashtag(newhashtagsArr);
 
     if (errorCode !== '') {
