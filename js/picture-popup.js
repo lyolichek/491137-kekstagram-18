@@ -5,7 +5,7 @@
 
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
-  var btnCommendsLoader = bigPicture.querySelector('.comments-loader');
+  var btnCommentsLoader = bigPicture.querySelector('.comments-loader');
   var commentsList = document.querySelector('.social__comments');
   var commentTemplate = document.querySelector('.social__comment');
   var fragment = document.createDocumentFragment();
@@ -13,12 +13,12 @@
   window.addEventToGalleryItem = function () {
     var galleryItems = document.querySelectorAll('a.picture');
 
-    for (var l = 0; l < galleryItems.length; l++) {
-      galleryItems[l].addEventListener('click', fillImgPopup);
-    }
+    galleryItems.forEach(function (item) {
+      item.addEventListener('click', fillImgPopupHandler);
+    });
   };
 
-  function fillImgPopup(evt) {
+  function fillImgPopupHandler(evt) {
     for (var m = 0; m < evt.path.length; m++) {
       if (evt.path[m].classList && evt.path[m].classList.contains('picture')) {
         var clickedElement = evt.path[m];
@@ -43,9 +43,9 @@
     caption.textContent = obj.description;
     allCommentsCount.textContent = obj.comments.length;
 
-    for (var i = 0; i < obj.comments.length; i++) {
-      fragment.appendChild(createCommentItem(obj.comments[i]));
-    }
+    obj.comments.forEach(function (comment) {
+      fragment.appendChild(createCommentItem(comment));
+    });
 
     deleteDefaultComments(commentsList);
     commentsList.appendChild(fragment);
@@ -53,9 +53,9 @@
     var allComments = bigPicture.querySelectorAll('.social__comment');
 
     if (allComments.length <= MIN_COMMENTS) {
-      btnCommendsLoader.style.display = 'none';
+      btnCommentsLoader.style.display = 'none';
     } else {
-      btnCommendsLoader.style.display = 'block';
+      btnCommentsLoader.style.display = 'block';
     }
 
     for (var j = MIN_COMMENTS; j < allComments.length; j++) {
@@ -104,7 +104,7 @@
       }
 
       if (commentsHidden.length <= MIN_COMMENTS) {
-        btnCommendsLoader.style.display = 'none';
+        btnCommentsLoader.style.display = 'none';
       }
 
       if (i === commentsHidden.length) {
@@ -119,14 +119,14 @@
   });
 
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.ESC) {
       evt.preventDefault();
       window.popup.close(bigPicture);
     }
   });
 
   // Загрузить еще
-  btnCommendsLoader.addEventListener('click', function () {
+  btnCommentsLoader.addEventListener('click', function () {
     loadComments();
     getCommentsCount();
   });

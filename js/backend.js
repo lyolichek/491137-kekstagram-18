@@ -1,51 +1,43 @@
 'use strict';
 
 (function () {
-  window.backend = {
-    load: function (url, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
+  var STATUS_VALUE = 200;
+  var TIMEOUT_VALUE = 10000;
 
-      xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
-          onLoad(xhr.response);
-        } else {
-          onError();
-        }
-      });
+  window.load = function (url, onLoad, onError) {
+    var xhr = getXhr(onLoad, onError);
+    xhr.open('GET', url);
+    xhr.send();
+  };
 
-      xhr.addEventListener('error', function () {
+  window.upload = function (data, onLoad, onError) {
+    var xhr = getXhr(onLoad, onError);
+    xhr.open('POST', window.utils.serverLink);
+    xhr.send(data);
+  };
+
+  var getXhr = function (onLoad, onError) {
+    var xhr = new XMLHttpRequest();
+    xhr.responseType = 'json';
+
+    xhr.addEventListener('load', function () {
+      if (xhr.status === STATUS_VALUE) {
+        onLoad(xhr.response);
+      } else {
         onError();
-      });
+      }
+    });
 
-      xhr.addEventListener('timeout', function () {
-        onError();
-      });
+    xhr.addEventListener('error', function () {
+      onError();
+    });
 
-      xhr.timeout = 10000;
+    xhr.addEventListener('timeout', function () {
+      onError();
+    });
 
-      xhr.open('GET', url);
-      xhr.send();
-    },
+    xhr.timeout = TIMEOUT_VALUE;
 
-    upload: function (data, onLoad, onError) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'json';
-
-      xhr.addEventListener('load', function () {
-        if (xhr.status === 200) {
-          onLoad(xhr.response);
-        } else {
-          onError();
-        }
-      });
-
-      xhr.addEventListener('error', function () {
-        onError();
-      });
-
-      xhr.open('POST', window.utils.serverLink);
-      xhr.send(data);
-    }
+    return xhr;
   };
 })();
